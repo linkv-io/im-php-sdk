@@ -1,0 +1,16 @@
+{
+    "name": "linkv/im-php-sdk",
+    "description": "im sdk",
+    "type": "library",
+    "require": {
+        "php": ">=7.0",
+        "guzzlehttp/guzzle": "^6.5.2"
+    },
+    "license": "Apache License 2.0",
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "LinkV\\Im\\": "src/"
+        }
+    }
+}
