@@ -8,9 +8,12 @@ class Response
     protected $message;
     protected $data;
 
-    public function __construct(int $code, string $body)
+    public function __construct(string $body)
     {
-
+        $jsonData = json_decode($body);
+        $this->code = $jsonData['code'];
+        $this->message = $jsonData['msg'];
+        $this->data = $jsonData['data'];
     }
 
     public function getCode()
