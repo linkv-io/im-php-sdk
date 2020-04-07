@@ -6,7 +6,7 @@
         "php": ">=7.0",
         "guzzlehttp/guzzle": "^6.5.2"
     },
-    "license": "Apache License 2.0",
+    "license": "MIT",
     "minimum-stability": "dev",
     "autoload": {
         "psr-4": {
