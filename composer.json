@@ -1,16 +1,16 @@
 {
     "name": "linkv/im-php-sdk",
-    "description": "im sdk",
     "type": "library",
+    "description": "im sdk",
     "require": {
-        "php": ">=7.0",
+        "php": ">=5.5",
+        "ext-json": "*",
         "guzzlehttp/guzzle": "^6.5.2"
     },
     "license": "MIT",
-    "minimum-stability": "stable",
     "autoload": {
         "psr-4": {
-            "LinkV\\Im\\": "src/"
+            "LinkV\\IM": "src/"
         }
     }
 }

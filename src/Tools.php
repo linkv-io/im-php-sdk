@@ -1,34 +1,63 @@
 <?php
 
-namespace LinkV\Im;
+namespace LinkV\IM;
 
+/**
+ * Class Tools
+ *
+ * @package LinkV\IM
+ */
 final class Tools
 {
-    static function String2Hex($string): string
-    {
-        $hex = '';
-        for ($i = 0; $i < strlen($string); $i++) {
-            $hex .= dechex(ord($string[$i]));
-        }
-        return $hex;
-    }
-
-    static function Hex2String($hex): string
+    /**
+     * Hex2String is byte => string
+     *
+     * @param string $hex
+     *
+     * @return string
+     */
+    static function Hex2String($hex)
     {
         $string = '';
-        for ($i = 0; $i < strlen($hex) - 1; $i += 2) {
-            $string .= chr(hexdec($hex[$i] . $hex[$i + 1]));
+        for ($i = 0; $i < strlen($hex); $i++) {
+            $string .= dechex(ord($hex[$i]));
         }
         return $string;
     }
 
-    static function GetTimestamp(): float
+    /**
+     * String2Hex is string => byte
+     *
+     * @param string $string
+     *
+     * @return string
+     */
+    static function String2Hex($string)
     {
-        list($usec, $sec) = explode(" ", microtime());
-        return (float)$sec;
+        $hex = '';
+        for ($i = 0; $i < strlen($string) - 1; $i += 2) {
+            $hex .= chr(hexdec($string[$i] . $string[$i + 1]));
+        }
+        return $hex;
     }
 
-    static function genGUID(): string
+    /**
+     * GetTimestamp 获取时间戳
+     *
+     * @return float
+     */
+    static function GetTimestamp()
+    {
+        $arr = explode(" ", microtime());
+        return (float)$arr[1];
+    }
+
+    /**
+     * genGUID 获取guid
+     *
+     * @return string
+     */
+    static function genGUID()
     {
         $charID = strtoupper(md5(uniqid(mt_rand(), true)));
         $hyphen = chr(45);// "-"

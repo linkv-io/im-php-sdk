@@ -3,10 +3,10 @@ namespace LinkV\IM\Exceptions;
 
 use Exception;
 /**
- * Class ResponseException
+ * Class SDKException
  *
  * @package LinkV\IM
  */
-class ResponseException extends Exception
+class SDKException extends Exception
 {
 }

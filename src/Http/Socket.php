@@ -1,15 +1,30 @@
 <?php
 
-namespace LinkV\Im\Http;
+namespace LinkV\IM\Http;
 
-use LinkV\Im\Exceptions\ResponseException;
-use LinkV\Im\SocketInterface;
+use LinkV\IM\Exceptions\ResponseException;
+use LinkV\IM\SocketInterface;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 
+/**
+ * Class Socket
+ *
+ * @package LinkV\IM
+ */
 class Socket implements SocketInterface
 {
-    public function send(Request $req): Response
+    /**
+     * send 发送请求
+     *
+     * @param Request $req
+     *
+     * @return Response
+     *
+     * @throws ResponseException|GuzzleException
+     */
+    public function send($req)
     {
         $params = http_build_query($req->getParams());
 
