@@ -22,19 +22,23 @@ class Socket implements SocketInterface
      *
      * @return Response
      *
-     * @throws ResponseException|GuzzleException
+     * @throws ResponseException
      */
     public function send($req)
     {
         $params = http_build_query($req->getParams());
 
         $client = new Client();
-        $res = $client->request('GET', "{$req->getURL()}?{$params}", [
-            'headers' => $req->getHeaders(),
-        ]);
-        if ($res->getStatusCode() != 200) {
+        try {
+            $res = $client->request('GET', "{$req->getURL()}?{$params}", [
+                'headers' => $req->getHeaders(),
+            ]);
+            if ($res->getStatusCode() != 200) {
+                throw new ResponseException('');
+            }
+            return new Response($res->getBody());
+        }catch (GuzzleException $e){
             throw new ResponseException('');
         }
-        return new Response($res->getBody());
     }
 }
