@@ -16,13 +16,9 @@ class Request
      */
     protected $url;
     /**
-     * @var string The app id.
+     * @var array The header.
      */
-    protected $appID;
-    /**
-     * @var string The app key.
-     */
-    protected $appKey;
+    protected $header;
     /**
      * @var array The params.
      */
@@ -32,17 +28,43 @@ class Request
      * Instantiates a new Request super-class object.
      *
      * @param string $url
-     * @param string $appID
-     * @param string $appKey
+     * @param array $header
      * @param array $params
      *
      */
-    public function __construct($url, $appID, $appKey, $params)
+    public function __construct($url, $header, $params)
     {
         $this->url = $url;
-        $this->appID = $appID;
-        $this->appKey = $appKey;
+
+        $this->header = $header;
         $this->params = $params;
+    }
+
+    /**
+     * Instantiates a new Request super-class object.
+     *
+     * @param string $url
+     * @param string $appID
+     * @param string $appKey
+     * @param array $header
+     * @param array $params
+     *
+     * @return Request
+     */
+    public static function makeRequestWithSign($url, $appID, $appKey, $header, $params)
+    {
+        $timestamp = Tools::GetTimestamp();
+        $nonce = Tools::genGUID();
+
+        $header['appId'] = $appID;
+        $header['appKey'] = $appKey;
+        $header['timestamp'] = $timestamp;
+        $header['nonce'] = $nonce;
+        $header['sign'] = sha1("{$appID}|{$appKey}|{$timestamp}|{$nonce}");
+
+        $params['sign'] = hash_hmac('sha256', http_build_query($params), $appKey);
+
+        return new Request($url, $header, $params);
     }
 
     /**
@@ -62,20 +84,7 @@ class Request
      */
     public function getHeaders()
     {
-        $timestamp = Tools::GetTimestamp();
-        $nonce = Tools::genGUID();
-
-//        $s = sha1("{$this->appID}|{$this->appKey}|{$timestamp}|{$nonce}", true);
-//        $sign = Tools::Hex2String($s);
-
-        $sign = sha1("{$this->appID}|{$this->appKey}|{$timestamp}|{$nonce}");
-
-        return [
-            'appId' => $this->appID,
-            'timestamp' => $timestamp,
-            'nonce' => $nonce,
-            'sign' => $sign,
-        ];
+        return $this->header;
     }
 
     /**
@@ -85,10 +94,7 @@ class Request
      */
     public function getParams()
     {
-//        $s = hash_hmac('sha256', http_build_query($this->params), $this->appKey, true);
-//        $this->params['sign'] = Tools::Hex2String($s);
 
-        $this->params['sign'] = hash_hmac('sha256', http_build_query($this->params), $this->appKey);
         return $this->params;
     }
 }

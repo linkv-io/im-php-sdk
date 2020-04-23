@@ -2,6 +2,8 @@
 
 namespace LinkV\IM\Http;
 
+use LinkV\IM\Exceptions\ResponseException;
+
 /**
  * Class Response
  *
@@ -27,13 +29,17 @@ class Response
      *
      * @param string $body
      *
+     * @throws ResponseException
      */
     public function __construct($body)
     {
         $jsonData = json_decode($body, true);
+        if ($jsonData == null) {
+            throw new ResponseException("response decode error body:{$body}");
+        }
         $this->code = $jsonData['code'] ?: -1;
         $this->message = $jsonData['msg'] ?: '';
-        $this->data = $jsonData['data'] ?: null;
+        $this->data = $jsonData ?: null;
     }
 
     /**
@@ -54,5 +60,15 @@ class Response
     public function getMessage()
     {
         return $this->message;
+    }
+
+    /**
+     * return data
+     *
+     * @return array
+     */
+    public function getData()
+    {
+        return $this->data;
     }
 }
