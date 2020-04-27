@@ -117,7 +117,7 @@ class Client
 
         $resp = $this->handler->send($req);
         if ($resp->getCode() != 200) {
-            throw new ResponseException("code({$resp->getCode()}) not 200");
+            throw new ResponseException("code({$resp->getCode()}) not 200,  {$resp->getMessage()}");
         }
         return $resp;
     }
@@ -158,7 +158,7 @@ class Client
         $req = Request::makeRequestWithSign($url, $this->appID, $this->appKey, $header, $params);
         $resp = $this->handler->send($req);
         if ($resp->getCode() != 200) {
-            throw new ResponseException("code({$resp->getCode()}) not 200");
+            throw new ResponseException("code({$resp->getCode()}) not 200,  {$resp->getMessage()}");
         }
         return $resp;
     }
@@ -198,7 +198,7 @@ class Client
         $req = new Request($url, $header, $params);
         $resp = $this->handler->send($req);
         if ($resp->getCode() != 200) {
-            throw new ResponseException("code({$resp->getCode()}) not 200");
+            throw new ResponseException("code({$resp->getCode()}) not 200,  {$resp->getMessage()}");
         }
         return $resp->getData()['token'] ?: '';
     }

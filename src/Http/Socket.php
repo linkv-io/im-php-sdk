@@ -38,7 +38,7 @@ class Socket implements SocketInterface
             }
             return new Response($res->getBody());
         }catch (GuzzleException $e){
-            throw new ResponseException('');
+            throw new ResponseException($e->getMessage());
         }
     }
 }
