@@ -34,7 +34,7 @@ class Socket implements SocketInterface
                 'headers' => $req->getHeaders(),
             ]);
             if ($res->getStatusCode() != 200) {
-                throw new ResponseException('');
+                throw new ResponseException($res->getReasonPhrase());
             }
             return new Response($res->getBody());
         }catch (GuzzleException $e){

@@ -37,8 +37,8 @@ class Response
         if ($jsonData == null) {
             throw new ResponseException("response decode error body:{$body}");
         }
-        $this->code = $jsonData['code'] ?: -1;
-        $this->message = $jsonData['msg'] ?: '';
+        $this->code = !empty($jsonData['code']) ? $jsonData['code'] : -1;
+        $this->message = !empty($jsonData['msg']) ? $jsonData['msg'] : '';
         $this->data = $jsonData ?: null;
     }
 
