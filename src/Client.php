@@ -182,7 +182,7 @@ class Client
             $timestamp,
         ];
 
-        sort($arr);
+        sort($arr, SORT_STRING);
 
         $sign = md5(join('', $arr));
         $header = [
