@@ -189,7 +189,7 @@ class Client
             'nonce' => $nonce,
             'timestamp' => $timestamp,
             'appkey' => $this->appKey,
-            'signature' => $sign,
+            'sign' => $sign,
         ];
         $params = [
             'userId' => $userID,
