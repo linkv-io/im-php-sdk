@@ -190,6 +190,7 @@ class Client
             'timestamp' => $timestamp,
             'appkey' => $this->appKey,
             'sign' => $sign,
+            'signature' => $sign,
         ];
         $params = [
             'userId' => $userID,
